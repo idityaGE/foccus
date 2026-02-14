@@ -62,36 +62,25 @@ export default function Overlay({ visible, onInteraction }: OverlayProps) {
 
   return (
     <div
-      className={`absolute inset-0 z-30 flex flex-col
+      className={`absolute inset-0 z-30
         transition-opacity duration-300
         ${visible ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}
         bg-black/40 backdrop-blur-[2px]`}
       onClick={onInteraction}
     >
-      {/* Spacer pushes everything to bottom */}
-      <div className="flex-1" />
-
       {/* Bottom bar: menu (left) | controls (center) | fullscreen (right) */}
       <div
-        className="flex items-end justify-between p-4"
+        className="absolute bottom-4 left-4 right-4 flex items-center justify-between"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Bottom-left: Dropdown menu */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-9 w-9 rounded-xl bg-neutral-800/70 text-neutral-400 hover:bg-neutral-700/80 hover:text-neutral-200"
-            >
+            <Button variant="ghost" size="icon">
               <Menu className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent
-            align="start"
-            side="top"
-            className="w-48"
-          >
+          <DropdownMenuContent align="start" side="top" className="w-48">
             <DropdownMenuItem
               onClick={() => {
                 setSessionEditorOpen(true);
@@ -147,7 +136,6 @@ export default function Overlay({ visible, onInteraction }: OverlayProps) {
         <Button
           variant="ghost"
           size="icon"
-          className="h-9 w-9 rounded-xl bg-neutral-800/70 text-neutral-400 hover:bg-neutral-700/80 hover:text-neutral-200"
           onClick={toggleFullscreen}
           title="Fullscreen [F]"
         >

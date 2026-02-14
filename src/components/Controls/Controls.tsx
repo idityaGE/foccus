@@ -44,9 +44,8 @@ export default function Controls() {
     <div className="flex items-center gap-3">
       {/* Skip */}
       <Button
+        className="px-2 py-1"
         variant="secondary"
-        className="rounded-full px-5 py-2.5 gap-2 bg-neutral-800 text-neutral-400
-          hover:bg-neutral-700 hover:text-neutral-200 disabled:opacity-20"
         onClick={handleSkip}
         disabled={status === "Stopped"}
         title="Skip (S)"
@@ -57,9 +56,8 @@ export default function Controls() {
 
       {/* Start / Pause */}
       <Button
+        className="px-2 py-1"
         variant="secondary"
-        className="rounded-full px-7 py-2.5 gap-2 bg-neutral-700 text-neutral-200
-          hover:bg-neutral-600 hover:text-white"
         onClick={handleStartPause}
         title={`${startPauseLabel} (Space)`}
       >
@@ -73,9 +71,8 @@ export default function Controls() {
 
       {/* Stop */}
       <Button
+        className="px-2 py-1"
         variant="secondary"
-        className="rounded-full px-5 py-2.5 gap-2 bg-neutral-800 text-neutral-400
-          hover:bg-neutral-700 hover:text-neutral-200 disabled:opacity-20"
         onClick={handleStop}
         disabled={status === "Stopped"}
         title="Stop (Esc)"

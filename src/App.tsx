@@ -40,7 +40,7 @@ function App() {
     const update = () => {
       const now = new Date();
       setCurrentTime(
-        now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+        now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       );
     };
     update();
@@ -69,7 +69,7 @@ function App() {
   // Display time: if stopped, show the first segment duration of active session
   const displaySecs =
     status === "Stopped"
-      ? sessions[activeSessionIndex]?.segments[0]?.duration_secs ?? 0
+      ? (sessions[activeSessionIndex]?.segments[0]?.duration_secs ?? 0)
       : remainingSecs;
 
   // Label: only show Study/Break when running, nothing when stopped
@@ -81,7 +81,7 @@ function App() {
 
   return (
     <div
-      className="relative w-full h-full flex items-center justify-center bg-background select-none"
+      className="relative w-full h-full flex items-center justify-center bg-[#1a1a1a] select-none"
       onClick={overlay.toggle}
     >
       {/* Title Bar (auto-hide, drag region) */}
