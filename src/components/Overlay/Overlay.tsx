@@ -62,15 +62,16 @@ export default function Overlay({ visible, onInteraction }: OverlayProps) {
 
   return (
     <div
-      className={`absolute inset-0 z-30
+      className={`absolute inset-0 z-30 flex flex-col
         transition-opacity duration-300
         ${visible ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}
         bg-black/40 backdrop-blur-[2px]`}
       onClick={onInteraction}
     >
+      <div className="flex-1"></div>
       {/* Bottom bar: menu (left) | controls (center) | fullscreen (right) */}
       <div
-        className="absolute bottom-4 left-4 right-4 flex items-center justify-between"
+        className="flex items-end justify-between p-4"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Bottom-left: Dropdown menu */}

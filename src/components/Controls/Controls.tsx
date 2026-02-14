@@ -44,40 +44,37 @@ export default function Controls() {
     <div className="flex items-center gap-3">
       {/* Skip */}
       <Button
-        className="px-2 py-1"
         variant="secondary"
+        size="pill"
         onClick={handleSkip}
         disabled={status === "Stopped"}
         title="Skip (S)"
       >
-        <SkipForward className="h-3.5 w-3.5" />
+        <SkipForward />
         Skip
       </Button>
 
       {/* Start / Pause */}
       <Button
-        className="px-2 py-1"
         variant="secondary"
+        size="pill-lg"
+        className="bg-neutral-700 hover:bg-neutral-600"
         onClick={handleStartPause}
         title={`${startPauseLabel} (Space)`}
       >
-        {status === "Running" ? (
-          <Pause className="h-3.5 w-3.5" />
-        ) : (
-          <Play className="h-3.5 w-3.5" />
-        )}
+        {status === "Running" ? <Pause /> : <Play />}
         {startPauseLabel}
       </Button>
 
       {/* Stop */}
       <Button
-        className="px-2 py-1"
         variant="secondary"
+        size="pill"
         onClick={handleStop}
         disabled={status === "Stopped"}
         title="Stop (Esc)"
       >
-        <Square className="h-3.5 w-3.5" />
+        <Square />
         Stop
       </Button>
     </div>
