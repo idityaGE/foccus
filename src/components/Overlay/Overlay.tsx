@@ -45,15 +45,15 @@ export default function Overlay({ visible, onInteraction }: OverlayProps) {
 
   return (
     <div
-      className={`absolute inset-0 z-30 flex flex-col items-center justify-between
-        py-14 px-6 transition-opacity duration-300
+      className={`absolute inset-0 z-30 flex flex-col items-center
+        transition-opacity duration-300
         ${visible ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}
         bg-black/40 backdrop-blur-[2px]`}
       onClick={onInteraction}
     >
       {/* Top row - utility buttons */}
       <div
-        className="flex items-center gap-3 w-full justify-end"
+        className="flex items-center gap-3 w-full justify-end px-6 pt-14"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Sessions */}
@@ -145,12 +145,14 @@ export default function Overlay({ visible, onInteraction }: OverlayProps) {
         </button>
       </div>
 
-      {/* Center spacer */}
-      <div />
+      {/* Flexible spacer */}
+      <div className="flex-1" />
 
-      {/* Bottom row - main controls */}
-      <div className="flex flex-col items-center gap-3" onClick={(e) => e.stopPropagation()}>
-        <SessionIndicator />
+      {/* Bottom area - controls only, pushed up from bottom */}
+      <div
+        className="flex flex-col items-center gap-4 mb-[12%]"
+        onClick={(e) => e.stopPropagation()}
+      >
         <Controls />
       </div>
     </div>

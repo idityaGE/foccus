@@ -1,3 +1,12 @@
+/* ── Flip Clock Wrapper ─────────────────────────────────── */
+
+.flip-clock-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(10px, 2vh, 20px);
+}
+
 /* ── Flip Clock Styles ──────────────────────────────────── */
 
 .flip-clock {
@@ -187,4 +196,37 @@
   position: absolute;
   inset: 0;
   background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.15));
+}
+
+/* ── Responsive: Vertical layout on narrow widths ──────── */
+
+@container (max-width: 480px) {
+  .flip-clock {
+    flex-direction: column;
+  }
+  .flip-clock__colon {
+    flex-direction: row;
+    padding: clamp(2px, 0.5vh, 8px) 0;
+  }
+}
+
+/* Fallback for environments without container queries */
+@media (max-width: 480px) {
+  .flip-clock {
+    flex-direction: column;
+  }
+  .flip-clock__colon {
+    flex-direction: row;
+    padding: clamp(2px, 0.5vh, 8px) 0;
+  }
+  .rotor {
+    width: clamp(50px, 28vw, 120px);
+    height: clamp(66px, 37vw, 160px);
+  }
+  .rotor-top span,
+  .rotor-bottom span,
+  .rotor-leaf-front span,
+  .rotor-leaf-rear span {
+    font-size: clamp(50px, 30vw, 130px);
+  }
 }

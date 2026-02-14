@@ -68,10 +68,9 @@ function App() {
       ? sessions[activeSessionIndex]?.segments[0]?.duration_secs ?? 0
       : remainingSecs;
 
+  // Label: only show Study/Break when running, nothing when stopped
   const displayLabel =
-    status === "Stopped"
-      ? sessions[activeSessionIndex]?.name ?? "FOCCUS"
-      : segmentLabel;
+    status === "Stopped" ? "" : segmentLabel;
 
   if (miniMode) {
     return <MiniMode />;
