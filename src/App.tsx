@@ -51,15 +51,19 @@ function App() {
   // Handle mini mode window resize
   useEffect(() => {
     const win = getCurrentWindow();
-    if (miniMode) {
-      win.setSize(new LogicalSize(MINI_WIDTH, MINI_HEIGHT));
-      win.setMinSize(new LogicalSize(MINI_WIDTH, MINI_HEIGHT));
-      win.setResizable(false);
-    } else {
-      win.setMinSize(new LogicalSize(400, 300));
-      win.setSize(new LogicalSize(NORMAL_WIDTH, NORMAL_HEIGHT));
-      win.setResizable(true);
-    }
+    const apply = async () => {
+      if (miniMode) {
+        await win.setResizable(true);
+        await win.setMinSize(new LogicalSize(MINI_WIDTH, MINI_HEIGHT));
+        await win.setSize(new LogicalSize(MINI_WIDTH, MINI_HEIGHT));
+        await win.setResizable(false);
+      } else {
+        await win.setResizable(true);
+        await win.setMinSize(new LogicalSize(400, 300));
+        await win.setSize(new LogicalSize(NORMAL_WIDTH, NORMAL_HEIGHT));
+      }
+    };
+    apply();
   }, [miniMode]);
 
   // Display time: if stopped, show the first segment duration of active session

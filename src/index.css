@@ -67,3 +67,65 @@ input[type="range"]::-webkit-slider-thumb {
   background: #a3a3a3;
   cursor: pointer;
 }
+
+/* ── Control Buttons ───────────────────────────────────── */
+
+.control-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(6px, 1vw, 10px);
+  padding: clamp(10px, 1.8vh, 16px) clamp(18px, 3.2vw, 36px);
+  border-radius: 9999px;
+  font-size: clamp(13px, 1.5vw, 16px);
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+  border: none;
+  outline: none;
+}
+
+.control-btn:active {
+  transform: scale(0.95);
+}
+
+.control-btn:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+}
+
+.control-btn:disabled:active {
+  transform: none;
+}
+
+.control-btn__icon {
+  width: clamp(13px, 1.4vw, 16px);
+  height: clamp(13px, 1.4vw, 16px);
+  flex-shrink: 0;
+}
+
+/* Secondary: solid dark */
+.control-btn--secondary {
+  background: #2a2a2a;
+  color: #999;
+}
+
+.control-btn--secondary:hover:not(:disabled) {
+  background: #333;
+  color: #ddd;
+}
+
+/* Primary: solid slightly lighter */
+.control-btn--primary {
+  background: #333;
+  color: #ccc;
+  padding-left: clamp(22px, 3.8vw, 42px);
+  padding-right: clamp(22px, 3.8vw, 42px);
+}
+
+.control-btn--primary:hover {
+  background: #3d3d3d;
+  color: #fff;
+}
