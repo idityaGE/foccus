@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { LogicalSize } from "@tauri-apps/api/dpi";
-import { useTimerStore } from "./stores/timerStore";
-import { useSettingsStore } from "./stores/settingsStore";
-import { useTimerEvents } from "./hooks/useTimerEvents";
-import { useKeyboardShortcuts } from "./hooks/useKeyboardShortcuts";
-import { useAutoHide } from "./hooks/useAutoHide";
-import FlipClock from "./components/FlipClock/FlipClock";
-import TitleBar from "./components/TitleBar/TitleBar";
-import Overlay from "./components/Overlay/Overlay";
-import Settings from "./components/Settings/Settings";
-import SessionEditor from "./components/SessionEditor/SessionEditor";
-import MiniMode from "./components/MiniMode/MiniMode";
+import { useTimerStore } from "@/stores/timerStore";
+import { useSettingsStore } from "@/stores/settingsStore";
+import { useTimerEvents } from "@/hooks/useTimerEvents";
+import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
+import { useAutoHide } from "@/hooks/useAutoHide";
+import FlipClock from "@/components/FlipClock/FlipClock";
+import Overlay from "@/components/Overlay/Overlay";
+import Settings from "@/components/Settings/Settings";
+import SessionEditor from "@/components/SessionEditor/SessionEditor";
+import MiniMode from "@/components/MiniMode/MiniMode";
+import TitleBar from "@/components/TitleBar/TitleBar";
 
 const MINI_WIDTH = 260;
 const MINI_HEIGHT = 48;
@@ -73,8 +73,7 @@ function App() {
       : remainingSecs;
 
   // Label: only show Study/Break when running, nothing when stopped
-  const displayLabel =
-    status === "Stopped" ? "" : segmentLabel;
+  const displayLabel = status === "Stopped" ? "" : segmentLabel;
 
   if (miniMode) {
     return <MiniMode />;
@@ -82,15 +81,15 @@ function App() {
 
   return (
     <div
-      className="relative w-full h-full flex items-center justify-center bg-[#1a1a1a] select-none"
+      className="relative w-full h-full flex items-center justify-center bg-background select-none"
       onClick={overlay.toggle}
     >
-      {/* Title Bar */}
+      {/* Title Bar (auto-hide, drag region) */}
       <TitleBar />
 
       {/* Real-time clock */}
       {showClock && (
-        <div className="absolute top-3 right-4 z-20 text-xs text-neutral-500 font-mono tabular-nums">
+        <div className="absolute top-3 right-4 z-20 text-xs text-muted-foreground font-mono tabular-nums">
           {currentTime}
         </div>
       )}

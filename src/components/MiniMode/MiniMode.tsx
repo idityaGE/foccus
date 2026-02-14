@@ -1,4 +1,4 @@
-import { useTimerStore } from "../../stores/timerStore";
+import { useTimerStore } from "@/stores/timerStore";
 
 function formatTime(secs: number): string {
   const m = Math.floor(secs / 60);

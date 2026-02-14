@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { Settings } from "../lib/types";
+import type { Settings } from "@/lib/types";
 
 interface SettingsStore {
   settings: Settings;

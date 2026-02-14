@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { listen } from "@tauri-apps/api/event";
-import { useTimerStore } from "../stores/timerStore";
-import { useSettingsStore } from "../stores/settingsStore";
+import { useTimerStore } from "@/stores/timerStore";
+import { useSettingsStore } from "@/stores/settingsStore";
 import {
   loadSettings,
   loadSessions,
@@ -11,12 +11,12 @@ import {
   pauseTimer,
   stopTimer,
   skipSegment,
-} from "../lib/commands";
+} from "@/lib/commands";
 import type {
   TickPayload,
   StateChangePayload,
   SegmentEndPayload,
-} from "../lib/types";
+} from "@/lib/types";
 import {
   isPermissionGranted,
   requestPermission,

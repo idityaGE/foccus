@@ -1,12 +1,19 @@
+import { fileURLToPath } from "url";
+import { dirname, resolve } from "path";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
-// @ts-expect-error process is a nodejs global
 const host = process.env.TAURI_DEV_HOST;
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig(async () => ({
   plugins: [react(), tailwindcss()],
+  resolve: {
+    alias: {
+      "@": resolve(__dirname, "./src"),
+    },
+  },
   clearScreen: false,
   server: {
     port: 1420,

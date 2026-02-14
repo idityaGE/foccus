@@ -5,49 +5,54 @@ interface FlipDigitProps {
 }
 
 export default function FlipDigit({ digit }: FlipDigitProps) {
-  const [currentDigit, setCurrentDigit] = useState(digit);
+  const [displayDigit, setDisplayDigit] = useState(digit);
   const [nextDigit, setNextDigit] = useState(digit);
   const [flipping, setFlipping] = useState(false);
-  const leafRef = useRef<HTMLDivElement>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    if (digit !== currentDigit) {
-      // Set up the new digit on hidden faces
+    if (digit !== displayDigit && !flipping) {
+      // Start flip: front shows old (displayDigit), rear shows new (digit)
       setNextDigit(digit);
       setFlipping(true);
 
-      const timeout = setTimeout(() => {
+      timeoutRef.current = setTimeout(() => {
+        // Flip done: update static halves, reset leaf
+        setDisplayDigit(digit);
         setFlipping(false);
-        setCurrentDigit(digit);
-        setNextDigit(digit);
-      }, 400); // matches CSS transition duration
-
-      return () => clearTimeout(timeout);
+      }, 400);
+    } else if (digit !== displayDigit && flipping) {
+      // Digit changed again mid-flip: let current flip finish,
+      // then it'll re-trigger from the useEffect since displayDigit !== digit
+      setNextDigit(digit);
     }
-  }, [digit, currentDigit]);
+  }, [digit, displayDigit, flipping]);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
 
   return (
     <div className="rotor">
-      {/* Static top - shows the NEW digit (revealed when flap flips away) */}
+      {/* Static top half - shows NEW digit (revealed when flap flips away) */}
       <div className="rotor-top">
         <span>{nextDigit}</span>
       </div>
 
-      {/* Static bottom - shows the OLD digit (covered by flap rear after flip) */}
+      {/* Static bottom half - shows OLD digit (covered by rear after flip) */}
       <div className="rotor-bottom">
-        <span>{currentDigit}</span>
+        <span>{displayDigit}</span>
       </div>
 
       {/* Animated leaf / flap */}
-      <div
-        ref={leafRef}
-        className={`rotor-leaf${flipping ? " flipping" : ""}`}
-      >
-        {/* Front: top half of OLD digit */}
+      <div className={`rotor-leaf${flipping ? " flipping" : ""}`}>
+        {/* Front: top half of OLD digit (visible before flip) */}
         <div className="rotor-leaf-front">
-          <span>{currentDigit}</span>
+          <span>{displayDigit}</span>
         </div>
-        {/* Rear: bottom half of NEW digit */}
+        {/* Rear: bottom half of NEW digit (revealed after flip) */}
         <div className="rotor-leaf-rear">
           <span>{nextDigit}</span>
         </div>

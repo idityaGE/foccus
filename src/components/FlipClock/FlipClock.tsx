@@ -1,6 +1,6 @@
 import FlipDigit from "./FlipDigit";
 import "./FlipClock.css";
-import { useTimerStore } from "../../stores/timerStore";
+import { useTimerStore } from "@/stores/timerStore";
 
 interface FlipClockProps {
   remainingSecs: number;

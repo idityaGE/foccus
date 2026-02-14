@@ -1,13 +1,13 @@
 import { useEffect } from "react";
-import { useTimerStore } from "../stores/timerStore";
-import { useSettingsStore } from "../stores/settingsStore";
+import { useTimerStore } from "@/stores/timerStore";
+import { useSettingsStore } from "@/stores/settingsStore";
 import {
   startTimer,
   pauseTimer,
   resumeTimer,
   stopTimer,
   skipSegment,
-} from "../lib/commands";
+} from "@/lib/commands";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 
 export function useKeyboardShortcuts() {

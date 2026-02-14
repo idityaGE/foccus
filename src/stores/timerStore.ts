@@ -3,7 +3,7 @@ import type {
   TimerStatus,
   TickPayload,
   Session,
-} from "../lib/types";
+} from "@/lib/types";
 
 interface TimerStore {
   // Timer state

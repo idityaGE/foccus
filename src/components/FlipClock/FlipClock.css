@@ -45,9 +45,8 @@
   width: clamp(60px, 15vw, 180px);
   height: clamp(80px, 20vw, 240px);
   perspective: 400px;
-  contain: layout style paint;
+  transform-style: preserve-3d;
   border-radius: clamp(4px, 0.8vw, 12px);
-  overflow: hidden;
 }
 
 /* Static top half - shows NEW digit */
@@ -122,11 +121,11 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 50%;
   z-index: 5;
   transform-style: preserve-3d;
   will-change: transform;
-  transform-origin: center 50%;
+  transform-origin: center bottom;
   transition: none;
 }
 
@@ -141,7 +140,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 50%;
+  height: 100%;
   overflow: hidden;
   background: #2a2a2a;
   border-radius: clamp(4px, 0.8vw, 12px) clamp(4px, 0.8vw, 12px) 0 0;
@@ -165,16 +164,16 @@
 /* Rear face of the leaf - bottom half showing NEW digit */
 .rotor-leaf-rear {
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 0;
   width: 100%;
-  height: 50%;
+  height: 100%;
   overflow: hidden;
   background: #252525;
   border-radius: 0 0 clamp(4px, 0.8vw, 12px) clamp(4px, 0.8vw, 12px);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  transform: rotateX(-180deg);
+  transform: rotateX(180deg);
   display: flex;
   align-items: flex-start;
   justify-content: center;

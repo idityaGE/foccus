@@ -1,4 +1,4 @@
-import { useTimerStore } from "../../stores/timerStore";
+import { useTimerStore } from "@/stores/timerStore";
 
 export default function SessionIndicator() {
   const currentSegment = useTimerStore((s) => s.currentSegment);
