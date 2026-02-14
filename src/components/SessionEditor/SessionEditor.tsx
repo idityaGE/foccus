@@ -11,8 +11,10 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -21,19 +23,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import {
-  Field,
-  FieldGroup,
-  FieldLabel,
-  FieldSeparator,
-} from "@/components/ui/field";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-  InputGroupButton,
-  InputGroupText,
-} from "@/components/ui/input-group";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
 import { Pencil, Trash2, Plus, X } from "lucide-react";
 
 export default function SessionEditor() {
@@ -126,72 +118,80 @@ export default function SessionEditor() {
             }}
           />
         ) : (
-          <ScrollArea className="max-h-[60vh]">
-            <div className="space-y-2 pr-2">
-              {sessions.map((session, i) => (
-                <div
-                  key={i}
-                  className={`flex items-center justify-between p-3 rounded-lg cursor-pointer transition-colors ${
-                    i === activeSessionIndex
-                      ? "bg-neutral-700/50 ring-1 ring-neutral-600"
-                      : "bg-neutral-800/50 hover:bg-neutral-800"
-                  }`}
-                  onClick={() => handleSelect(i)}
-                >
-                  <div>
-                    <p className="text-sm text-neutral-200 font-medium">
-                      {session.name}
-                      {session.is_preset && (
-                        <span className="ml-2 text-[10px] text-neutral-500 uppercase">
-                          preset
-                        </span>
-                      )}
-                    </p>
-                    <p className="text-xs text-neutral-500 mt-0.5">
-                      {session.segments.length} segments &middot;{" "}
-                      {formatTotalTime(session.segments)}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-7 w-7 text-neutral-500 hover:text-neutral-200"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        startEdit(i);
-                      }}
+          <div className="space-y-4">
+            <ScrollArea className="max-h-[50vh]">
+              <RadioGroup
+                value={String(activeSessionIndex)}
+                onValueChange={(v) => handleSelect(Number(v))}
+                className="gap-2 pr-2"
+              >
+                {sessions.map((session, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center gap-3 rounded-lg bg-neutral-800/50 p-3 hover:bg-neutral-800 transition-colors"
+                  >
+                    <RadioGroupItem
+                      value={String(i)}
+                      id={`session-${i}`}
+                      className="shrink-0"
+                    />
+                    <Label
+                      htmlFor={`session-${i}`}
+                      className="flex-1 cursor-pointer"
                     >
-                      <Pencil className="h-3 w-3" />
-                    </Button>
-                    {!session.is_preset && (
+                      <p className="text-sm font-medium text-neutral-200">
+                        {session.name}
+                        {session.is_preset && (
+                          <span className="ml-2 text-[10px] text-neutral-500 uppercase">
+                            preset
+                          </span>
+                        )}
+                      </p>
+                      <p className="text-xs text-neutral-500 mt-0.5">
+                        {session.segments.length} segments &middot;{" "}
+                        {formatTotalTime(session.segments)}
+                      </p>
+                    </Label>
+                    <div className="flex items-center gap-1 shrink-0">
                       <Button
                         variant="ghost"
-                        size="icon"
-                        className="h-7 w-7 text-neutral-500 hover:text-red-400"
+                        size="icon-sm"
+                        className="text-neutral-500 hover:text-neutral-200"
                         onClick={(e) => {
                           e.stopPropagation();
-                          handleDelete(i);
+                          startEdit(i);
                         }}
                       >
-                        <Trash2 className="h-3 w-3" />
+                        <Pencil className="h-3.5 w-3.5" />
                       </Button>
-                    )}
+                      {!session.is_preset && (
+                        <Button
+                          variant="ghost"
+                          size="icon-sm"
+                          className="text-neutral-500 hover:text-red-400"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDelete(i);
+                          }}
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </Button>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </RadioGroup>
+            </ScrollArea>
 
-              <Button
-                variant="outline"
-                className="w-full border-dashed border-neutral-700 text-neutral-400
-                  hover:text-neutral-200 hover:border-neutral-500"
-                onClick={startNewSession}
-              >
-                <Plus className="mr-2 h-4 w-4" />
-                New Session
-              </Button>
-            </div>
-          </ScrollArea>
+            <Button
+              variant="outline"
+              className="w-full border-dashed border-neutral-700 text-neutral-400 hover:text-neutral-200 hover:border-neutral-500"
+              onClick={startNewSession}
+            >
+              <Plus className="h-4 w-4" />
+              New Session
+            </Button>
+          </div>
         )}
       </DialogContent>
     </Dialog>
@@ -240,102 +240,91 @@ function SessionForm({
   };
 
   return (
-    <FieldGroup className="gap-4">
+    <div className="space-y-5">
       {/* Session name */}
-      <Field>
-        <FieldLabel className="text-xs text-neutral-400">Session Name</FieldLabel>
-        <InputGroup className="bg-neutral-800 border-neutral-700">
-          <InputGroupInput
-            value={name}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
-            placeholder="My Session"
-            className="text-neutral-200 placeholder:text-neutral-600"
-          />
-        </InputGroup>
-      </Field>
+      <div className="space-y-2">
+        <Label className="text-sm text-neutral-400">Session Name</Label>
+        <Input
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="My Session"
+          className="bg-neutral-800 border-neutral-700 text-neutral-200 placeholder:text-neutral-500"
+        />
+      </div>
 
       {/* Segments */}
-      <Field>
-        <FieldLabel className="text-xs text-neutral-400">Segments</FieldLabel>
-        <div className="flex flex-col gap-2">
+      <div className="space-y-2">
+        <Label className="text-sm text-neutral-400">Segments</Label>
+        <div className="space-y-2">
           {segments.map((seg, i) => (
-            <InputGroup key={i} className="bg-neutral-800 border-neutral-700">
-              <InputGroupAddon align="inline-start" className="pl-0">
-                <Select
-                  value={seg.label}
-                  onValueChange={(v) => updateSegment(i, "label", v)}
-                >
-                  <SelectTrigger className="w-24 border-0 bg-transparent shadow-none text-xs text-neutral-200 focus:ring-0">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className="bg-neutral-800 border-neutral-700">
-                    <SelectItem value="Study">Study</SelectItem>
-                    <SelectItem value="Break">Break</SelectItem>
-                  </SelectContent>
-                </Select>
-              </InputGroupAddon>
-              <InputGroupInput
-                type="number"
-                min={1}
-                max={120}
-                value={Math.floor(seg.duration_secs / 60)}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  updateSegment(
-                    i,
-                    "duration_secs",
-                    parseInt(e.target.value || "1") * 60
-                  )
-                }
-                className="w-14 text-xs text-neutral-200 text-center"
-              />
-              <InputGroupAddon align="inline-end" className="gap-1">
-                <InputGroupText className="text-xs text-neutral-500">min</InputGroupText>
-                <InputGroupButton
-                  variant="ghost"
-                  size="icon-xs"
-                  className="text-neutral-500 hover:text-red-400"
-                  onClick={() => removeSegment(i)}
-                  disabled={segments.length <= 1}
-                >
-                  <X className="h-3 w-3" />
-                </InputGroupButton>
-              </InputGroupAddon>
-            </InputGroup>
+            <div key={i} className="flex items-center gap-2">
+              <Select
+                value={seg.label}
+                onValueChange={(v) => updateSegment(i, "label", v)}
+              >
+                <SelectTrigger className="w-24 bg-neutral-800 border-neutral-700 text-sm text-neutral-200">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-neutral-800 border-neutral-700">
+                  <SelectItem value="Study">Study</SelectItem>
+                  <SelectItem value="Break">Break</SelectItem>
+                </SelectContent>
+              </Select>
+
+              <div className="flex items-center gap-2">
+                <Input
+                  type="number"
+                  min={1}
+                  max={120}
+                  value={Math.floor(seg.duration_secs / 60)}
+                  onChange={(e) =>
+                    updateSegment(
+                      i,
+                      "duration_secs",
+                      parseInt(e.target.value || "1") * 60
+                    )
+                  }
+                  className="w-16 bg-neutral-800 border-neutral-700 text-sm text-neutral-200 text-center"
+                />
+                <span className="text-sm text-neutral-500">min</span>
+              </div>
+
+              <Button
+                variant="ghost"
+                size="icon-sm"
+                className="text-neutral-500 hover:text-red-400 shrink-0"
+                onClick={() => removeSegment(i)}
+                disabled={segments.length <= 1}
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
           ))}
+
           <Button
-            variant="ghost"
+            variant="outline"
             size="sm"
-            className="text-xs text-neutral-400 hover:text-neutral-200 px-0 w-fit"
+            className="border-dashed border-neutral-700 text-neutral-400 hover:text-neutral-200 hover:border-neutral-500"
             onClick={addSegment}
           >
-            <Plus className="mr-1 h-3 w-3" />
+            <Plus className="h-4 w-4" />
             Add segment
           </Button>
         </div>
-      </Field>
+      </div>
 
-      <FieldSeparator />
+      <Separator className="bg-neutral-800" />
 
       {/* Actions */}
-      <div className="flex items-center justify-end gap-2">
-        <Button
-          variant="ghost"
-          size="sm"
-          className="text-xs text-neutral-400"
-          onClick={onCancel}
-        >
+      <DialogFooter>
+        <Button variant="outline" onClick={onCancel}>
           Cancel
         </Button>
-        <Button
-          size="sm"
-          className="text-xs"
-          onClick={handleSubmit}
-          disabled={!name.trim()}
-        >
+        <Button onClick={handleSubmit} disabled={!name.trim()}>
           Save
         </Button>
-      </div>
-    </FieldGroup>
+      </DialogFooter>
+    </div>
   );
 }
 

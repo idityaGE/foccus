@@ -31,8 +31,17 @@ function App() {
   const sessions = useTimerStore((s) => s.sessions);
   const activeSessionIndex = useTimerStore((s) => s.activeSessionIndex);
   const showClock = useSettingsStore((s) => s.settings.show_clock);
+  const settingsOpen = useSettingsStore((s) => s.settingsOpen);
+  const sessionEditorOpen = useSettingsStore((s) => s.sessionEditorOpen);
 
   const [currentTime, setCurrentTime] = useState("");
+
+  // Only toggle overlay if no dialogs are open
+  const handleBackgroundClick = () => {
+    if (!settingsOpen && !sessionEditorOpen) {
+      overlay.toggle();
+    }
+  };
 
   // Real-time clock
   useEffect(() => {
@@ -82,7 +91,7 @@ function App() {
   return (
     <div
       className="relative w-full h-full flex items-center justify-center bg-[#1a1a1a] select-none"
-      onClick={overlay.toggle}
+      onClick={handleBackgroundClick}
     >
       {/* Title Bar (auto-hide, drag region) */}
       <TitleBar />
