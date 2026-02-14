@@ -42,8 +42,8 @@
 
 .rotor {
   position: relative;
-  width: clamp(60px, 15vw, 180px);
-  height: clamp(80px, 20vw, 240px);
+  width: clamp(60px, 20vw, 380px);
+  height: clamp(80px, 28vw, 540px);
   perspective: 400px;
   transform-style: preserve-3d;
   border-radius: clamp(4px, 0.8vw, 12px);
@@ -66,7 +66,7 @@
 }
 
 .rotor-top span {
-  font-size: clamp(60px, 16vw, 200px);
+  font-size: clamp(50px, 16vw, 500px);
   font-weight: 700;
   color: #c8c8c8;
   line-height: 1;
@@ -92,7 +92,7 @@
 }
 
 .rotor-bottom span {
-  font-size: clamp(60px, 16vw, 200px);
+  font-size: clamp(50px, 16vw, 500px);
   font-weight: 700;
   color: #bbb;
   line-height: 1;
@@ -152,7 +152,7 @@
 }
 
 .rotor-leaf-front span {
-  font-size: clamp(60px, 16vw, 200px);
+  font-size: clamp(50px, 16vw, 500px);
   font-weight: 700;
   color: #c8c8c8;
   line-height: 1;
@@ -180,7 +180,7 @@
 }
 
 .rotor-leaf-rear span {
-  font-size: clamp(60px, 16vw, 200px);
+  font-size: clamp(50px, 16vw, 500px);
   font-weight: 700;
   color: #bbb;
   line-height: 1;
@@ -194,12 +194,12 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.15));
+  background: linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.15));
 }
 
 /* ── Responsive: Vertical layout on narrow widths ──────── */
 
-@container (max-width: 480px) {
+@container (max-width: 880px) {
   .flip-clock {
     flex-direction: column;
   }
@@ -210,7 +210,7 @@
 }
 
 /* Fallback for environments without container queries */
-@media (max-width: 480px) {
+@media (max-width: 880px) {
   .flip-clock {
     flex-direction: column;
   }
@@ -219,13 +219,13 @@
     padding: clamp(2px, 0.5vh, 8px) 0;
   }
   .rotor {
-    width: clamp(50px, 28vw, 120px);
-    height: clamp(66px, 37vw, 160px);
+    width: clamp(150px, 28vw, 220px);
+    height: clamp(66px, 37vh, 360px);
   }
   .rotor-top span,
   .rotor-bottom span,
   .rotor-leaf-front span,
   .rotor-leaf-rear span {
-    font-size: clamp(50px, 30vw, 130px);
+    font-size: clamp(180px, 25vw, 530px);
   }
 }
