@@ -1,0 +1,190 @@
+/* ── Flip Clock Styles ──────────────────────────────────── */
+
+.flip-clock {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(8px, 2vw, 20px);
+  user-select: none;
+}
+
+.flip-clock__group {
+  display: flex;
+  gap: clamp(4px, 1vw, 10px);
+}
+
+.flip-clock__colon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(8px, 1.5vw, 16px);
+  padding: 0 clamp(2px, 0.5vw, 8px);
+}
+
+.flip-clock__colon-dot {
+  width: clamp(6px, 1vw, 12px);
+  height: clamp(6px, 1vw, 12px);
+  border-radius: 50%;
+  background: #555;
+}
+
+/* ── Single Digit Rotor ────────────────────────────────── */
+
+.rotor {
+  position: relative;
+  width: clamp(60px, 15vw, 180px);
+  height: clamp(80px, 20vw, 240px);
+  perspective: 400px;
+  contain: layout style paint;
+  border-radius: clamp(4px, 0.8vw, 12px);
+  overflow: hidden;
+}
+
+/* Static top half - shows NEW digit */
+.rotor-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  overflow: hidden;
+  background: #2a2a2a;
+  border-radius: clamp(4px, 0.8vw, 12px) clamp(4px, 0.8vw, 12px) 0 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 0;
+}
+
+.rotor-top span {
+  font-size: clamp(60px, 16vw, 200px);
+  font-weight: 700;
+  color: #c8c8c8;
+  line-height: 1;
+  transform: translateY(50%);
+  font-family: "Inter", "SF Mono", "Roboto Mono", monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Static bottom half - shows OLD digit (updated after flip) */
+.rotor-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  overflow: hidden;
+  background: #252525;
+  border-radius: 0 0 clamp(4px, 0.8vw, 12px) clamp(4px, 0.8vw, 12px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  z-index: 0;
+}
+
+.rotor-bottom span {
+  font-size: clamp(60px, 16vw, 200px);
+  font-weight: 700;
+  color: #bbb;
+  line-height: 1;
+  transform: translateY(-50%);
+  font-family: "Inter", "SF Mono", "Roboto Mono", monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Center divider line */
+.rotor::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 10;
+  transform: translateY(-50%);
+}
+
+/* ── The Animated Leaf (Flap) ──────────────────────────── */
+
+.rotor-leaf {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transform-origin: center 50%;
+  transition: none;
+}
+
+.rotor-leaf.flipping {
+  transition: transform 0.4s ease-in-out;
+  transform: rotateX(-180deg);
+}
+
+/* Front face of the leaf - top half showing OLD digit */
+.rotor-leaf-front {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  overflow: hidden;
+  background: #2a2a2a;
+  border-radius: clamp(4px, 0.8vw, 12px) clamp(4px, 0.8vw, 12px) 0 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.rotor-leaf-front span {
+  font-size: clamp(60px, 16vw, 200px);
+  font-weight: 700;
+  color: #c8c8c8;
+  line-height: 1;
+  transform: translateY(50%);
+  font-family: "Inter", "SF Mono", "Roboto Mono", monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Rear face of the leaf - bottom half showing NEW digit */
+.rotor-leaf-rear {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  overflow: hidden;
+  background: #252525;
+  border-radius: 0 0 clamp(4px, 0.8vw, 12px) clamp(4px, 0.8vw, 12px);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: rotateX(-180deg);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.rotor-leaf-rear span {
+  font-size: clamp(60px, 16vw, 200px);
+  font-weight: 700;
+  color: #bbb;
+  line-height: 1;
+  transform: translateY(-50%);
+  font-family: "Inter", "SF Mono", "Roboto Mono", monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Subtle shadow on the leaf during flip */
+.rotor-leaf-front::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.15));
+}

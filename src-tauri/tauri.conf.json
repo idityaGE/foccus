@@ -12,9 +12,15 @@
   "app": {
     "windows": [
       {
-        "title": "foccus",
+        "label": "main",
+        "title": "Foccus",
         "width": 800,
-        "height": 600
+        "height": 500,
+        "minWidth": 400,
+        "minHeight": 300,
+        "decorations": false,
+        "resizable": true,
+        "fullscreen": false
       }
     ],
     "security": {
@@ -30,6 +36,7 @@
       "icons/128x128@2x.png",
       "icons/icon.icns",
       "icons/icon.ico"
-    ]
+    ],
+    "resources": ["sounds/*"]
   }
 }
