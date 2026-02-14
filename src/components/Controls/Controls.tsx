@@ -57,7 +57,7 @@ export default function Controls() {
       {/* Start / Pause */}
       <Button
         variant="secondary"
-        size="pill-lg"
+        size="pill"
         className="bg-neutral-700 hover:bg-neutral-600"
         onClick={handleStartPause}
         title={`${startPauseLabel} (Space)`}

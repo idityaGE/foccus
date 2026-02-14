@@ -9,7 +9,13 @@ import {
 } from "@/components/ui/dialog";
 import { Switch } from "@/components/ui/switch";
 import { Slider } from "@/components/ui/slider";
-import { Separator } from "@/components/ui/separator";
+import {
+  FieldGroup,
+  Field,
+  FieldLabel,
+  FieldDescription,
+  FieldSeparator,
+} from "@/components/ui/field";
 
 export default function Settings() {
   const settings = useSettingsStore((s) => s.settings);
@@ -19,7 +25,7 @@ export default function Settings() {
 
   const handleChange = async <K extends keyof SettingsType>(
     key: K,
-    value: SettingsType[K]
+    value: SettingsType[K],
   ) => {
     updateSetting(key, value);
     const updated = { ...settings, [key]: value };
@@ -32,39 +38,46 @@ export default function Settings() {
 
   return (
     <Dialog open={settingsOpen} onOpenChange={setSettingsOpen}>
-      <DialogContent className="sm:max-w-md bg-neutral-900 border-neutral-800">
+      <DialogContent className="sm:max-w-md bg-neutral-900 border-neutral-800 z-50">
         <DialogHeader>
           <DialogTitle className="text-sm font-semibold text-neutral-200">
             Settings
           </DialogTitle>
         </DialogHeader>
 
-        <div className="space-y-5 py-2">
+        <FieldGroup className="gap-5 py-2">
           {/* Notifications */}
-          <SettingRow
-            label="Notifications"
-            description="Show system notifications on segment end"
-          >
+          <Field orientation="horizontal">
+            <FieldLabel className="flex-col items-start gap-0.5">
+              Notifications
+              <FieldDescription className="text-xs">
+                Show system notifications on segment end
+              </FieldDescription>
+            </FieldLabel>
             <Switch
               checked={settings.notification_enabled}
               onCheckedChange={(v) => handleChange("notification_enabled", v)}
             />
-          </SettingRow>
+          </Field>
 
           {/* Sound */}
-          <SettingRow
-            label="Sound"
-            description="Play sound on segment end"
-          >
+          <Field orientation="horizontal">
+            <FieldLabel className="flex-col items-start gap-0.5">
+              Sound
+              <FieldDescription className="text-xs">
+                Play sound on segment end
+              </FieldDescription>
+            </FieldLabel>
             <Switch
               checked={settings.sound_enabled}
               onCheckedChange={(v) => handleChange("sound_enabled", v)}
             />
-          </SettingRow>
+          </Field>
 
           {/* Volume */}
           {settings.sound_enabled && (
-            <SettingRow label="Volume" description="">
+            <Field orientation="horizontal">
+              <FieldLabel>Volume</FieldLabel>
               <Slider
                 value={[settings.volume]}
                 onValueChange={([v]) => handleChange("volume", v)}
@@ -73,21 +86,24 @@ export default function Settings() {
                 step={0.05}
                 className="w-28"
               />
-            </SettingRow>
+            </Field>
           )}
 
           {/* Auto-start next */}
-          <SettingRow
-            label="Auto-start next"
-            description="Automatically start the next segment"
-          >
+          <Field orientation="horizontal">
+            <FieldLabel className="flex-col items-start gap-0.5">
+              Auto-start next
+              <FieldDescription className="text-xs">
+                Automatically start the next segment
+              </FieldDescription>
+            </FieldLabel>
             <Switch
               checked={settings.auto_start_next}
               onCheckedChange={(v) => handleChange("auto_start_next", v)}
             />
-          </SettingRow>
+          </Field>
 
-          <Separator className="bg-neutral-800" />
+          <FieldSeparator />
 
           {/* Keyboard shortcuts */}
           <div>
@@ -109,30 +125,8 @@ export default function Settings() {
               <span className="text-neutral-400">Pin on top</span>
             </div>
           </div>
-        </div>
+        </FieldGroup>
       </DialogContent>
     </Dialog>
-  );
-}
-
-function SettingRow({
-  label,
-  description,
-  children,
-}: {
-  label: string;
-  description: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="flex items-center justify-between">
-      <div>
-        <p className="text-sm text-neutral-200">{label}</p>
-        {description && (
-          <p className="text-xs text-neutral-500 mt-0.5">{description}</p>
-        )}
-      </div>
-      {children}
-    </div>
   );
 }

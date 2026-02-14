@@ -13,7 +13,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -22,7 +21,19 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
+import {
+  Field,
+  FieldGroup,
+  FieldLabel,
+  FieldSeparator,
+} from "@/components/ui/field";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+  InputGroupButton,
+  InputGroupText,
+} from "@/components/ui/input-group";
 import { Pencil, Trash2, Plus, X } from "lucide-react";
 
 export default function SessionEditor() {
@@ -229,77 +240,81 @@ function SessionForm({
   };
 
   return (
-    <div className="space-y-4">
+    <FieldGroup className="gap-4">
       {/* Session name */}
-      <div className="space-y-1.5">
-        <label className="text-xs text-neutral-400">Session Name</label>
-        <Input
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="My Session"
-          className="bg-neutral-800 border-neutral-700 text-neutral-200 placeholder:text-neutral-600"
-        />
-      </div>
+      <Field>
+        <FieldLabel className="text-xs text-neutral-400">Session Name</FieldLabel>
+        <InputGroup className="bg-neutral-800 border-neutral-700">
+          <InputGroupInput
+            value={name}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
+            placeholder="My Session"
+            className="text-neutral-200 placeholder:text-neutral-600"
+          />
+        </InputGroup>
+      </Field>
 
       {/* Segments */}
-      <div className="space-y-2">
-        <label className="text-xs text-neutral-400">Segments</label>
-        {segments.map((seg, i) => (
-          <div key={i} className="flex items-center gap-2">
-            <Select
-              value={seg.label}
-              onValueChange={(v) => updateSegment(i, "label", v)}
-            >
-              <SelectTrigger className="w-24 bg-neutral-800 border-neutral-700 text-xs text-neutral-200">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="bg-neutral-800 border-neutral-700">
-                <SelectItem value="Study">Study</SelectItem>
-                <SelectItem value="Break">Break</SelectItem>
-              </SelectContent>
-            </Select>
-
-            <div className="flex items-center gap-1.5">
-              <Input
+      <Field>
+        <FieldLabel className="text-xs text-neutral-400">Segments</FieldLabel>
+        <div className="flex flex-col gap-2">
+          {segments.map((seg, i) => (
+            <InputGroup key={i} className="bg-neutral-800 border-neutral-700">
+              <InputGroupAddon align="inline-start" className="pl-0">
+                <Select
+                  value={seg.label}
+                  onValueChange={(v) => updateSegment(i, "label", v)}
+                >
+                  <SelectTrigger className="w-24 border-0 bg-transparent shadow-none text-xs text-neutral-200 focus:ring-0">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="bg-neutral-800 border-neutral-700">
+                    <SelectItem value="Study">Study</SelectItem>
+                    <SelectItem value="Break">Break</SelectItem>
+                  </SelectContent>
+                </Select>
+              </InputGroupAddon>
+              <InputGroupInput
                 type="number"
                 min={1}
                 max={120}
                 value={Math.floor(seg.duration_secs / 60)}
-                onChange={(e) =>
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   updateSegment(
                     i,
                     "duration_secs",
                     parseInt(e.target.value || "1") * 60
                   )
                 }
-                className="w-16 bg-neutral-800 border-neutral-700 text-xs text-neutral-200 text-center"
+                className="w-14 text-xs text-neutral-200 text-center"
               />
-              <span className="text-xs text-neutral-500">min</span>
-            </div>
+              <InputGroupAddon align="inline-end" className="gap-1">
+                <InputGroupText className="text-xs text-neutral-500">min</InputGroupText>
+                <InputGroupButton
+                  variant="ghost"
+                  size="icon-xs"
+                  className="text-neutral-500 hover:text-red-400"
+                  onClick={() => removeSegment(i)}
+                  disabled={segments.length <= 1}
+                >
+                  <X className="h-3 w-3" />
+                </InputGroupButton>
+              </InputGroupAddon>
+            </InputGroup>
+          ))}
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-xs text-neutral-400 hover:text-neutral-200 px-0 w-fit"
+            onClick={addSegment}
+          >
+            <Plus className="mr-1 h-3 w-3" />
+            Add segment
+          </Button>
+        </div>
+      </Field>
 
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-6 w-6 text-neutral-500 hover:text-red-400"
-              onClick={() => removeSegment(i)}
-              disabled={segments.length <= 1}
-            >
-              <X className="h-3 w-3" />
-            </Button>
-          </div>
-        ))}
-        <Button
-          variant="ghost"
-          size="sm"
-          className="text-xs text-neutral-400 hover:text-neutral-200 px-0"
-          onClick={addSegment}
-        >
-          <Plus className="mr-1 h-3 w-3" />
-          Add segment
-        </Button>
-      </div>
-
-      <Separator className="bg-neutral-800" />
+      <FieldSeparator />
 
       {/* Actions */}
       <div className="flex items-center justify-end gap-2">
@@ -320,7 +335,7 @@ function SessionForm({
           Save
         </Button>
       </div>
-    </div>
+    </FieldGroup>
   );
 }
 
