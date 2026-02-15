@@ -41,41 +41,40 @@ export default function Controls() {
     status === "Running" ? "Pause" : status === "Paused" ? "Resume" : "Start";
 
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-2 sm:gap-3">
       {/* Skip */}
       <Button
         variant="secondary"
-        size="pill"
+        className="h-auto rounded-full px-3 py-2 sm:px-5 sm:py-2.5 gap-1.5 sm:gap-2"
         onClick={handleSkip}
         disabled={status === "Stopped"}
         title="Skip (S)"
       >
-        <SkipForward />
-        Skip
+        <SkipForward className="size-4" />
+        <span className="hidden sm:inline">Skip</span>
       </Button>
 
       {/* Start / Pause */}
       <Button
         variant="secondary"
-        size="pill"
-        className="bg-neutral-700 hover:bg-neutral-600"
+        className="h-auto rounded-full px-3 py-2 sm:px-5 sm:py-2.5 gap-1.5 sm:gap-2 bg-neutral-700 hover:bg-neutral-600"
         onClick={handleStartPause}
         title={`${startPauseLabel} (Space)`}
       >
-        {status === "Running" ? <Pause /> : <Play />}
-        {startPauseLabel}
+        {status === "Running" ? <Pause className="size-4" /> : <Play className="size-4" />}
+        <span className="hidden sm:inline">{startPauseLabel}</span>
       </Button>
 
       {/* Stop */}
       <Button
         variant="secondary"
-        size="pill"
+        className="h-auto rounded-full px-3 py-2 sm:px-5 sm:py-2.5 gap-1.5 sm:gap-2"
         onClick={handleStop}
         disabled={status === "Stopped"}
         title="Stop (Esc)"
       >
-        <Square />
-        Stop
+        <Square className="size-4" />
+        <span className="hidden sm:inline">Stop</span>
       </Button>
     </div>
   );

@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(10px, 2vh, 20px);
+  gap: clamp(8px, 2vh, 16px);
 }
 
 /* ── Flip Clock Styles ──────────────────────────────────── */
@@ -13,13 +13,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: clamp(8px, 2vw, 20px);
+  gap: clamp(6px, 1.5vw, 16px);
   user-select: none;
 }
 
 .flip-clock__group {
   display: flex;
-  gap: clamp(4px, 1vw, 10px);
+  gap: clamp(4px, 0.8vw, 10px);
 }
 
 .flip-clock__colon {
@@ -27,26 +27,27 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: clamp(8px, 1.5vw, 16px);
-  padding: 0 clamp(2px, 0.5vw, 8px);
+  gap: clamp(6px, 1.2vw, 14px);
+  padding: 0 clamp(2px, 0.4vw, 6px);
 }
 
 .flip-clock__colon-dot {
-  width: clamp(6px, 1vw, 12px);
-  height: clamp(6px, 1vw, 12px);
+  width: clamp(5px, 0.8vw, 10px);
+  height: clamp(5px, 0.8vw, 10px);
   border-radius: 50%;
   background: #555;
 }
 
-/* ── Single Digit Rotor ────────────────────────────────── */
+/* ── Single Digit Rotor (Landscape - default) ──────────── */
+/* Uses min(vw, vh) to scale with smaller dimension for ~90% fill */
 
 .rotor {
   position: relative;
-  width: clamp(60px, 20vw, 380px);
-  height: clamp(80px, 28vw, 540px);
+  width: clamp(60px, min(20vw, 32vh), 400px);
+  height: clamp(84px, min(28vw, 45vh), 560px);
   perspective: 400px;
   transform-style: preserve-3d;
-  border-radius: clamp(4px, 0.8vw, 12px);
+  border-radius: clamp(4px, 0.6vw, 10px);
 }
 
 /* Static top half - shows NEW digit */
@@ -58,7 +59,7 @@
   height: 50%;
   overflow: hidden;
   background: #2a2a2a;
-  border-radius: clamp(4px, 0.8vw, 12px) clamp(4px, 0.8vw, 12px) 0 0;
+  border-radius: clamp(4px, 0.6vw, 10px) clamp(4px, 0.6vw, 10px) 0 0;
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -66,7 +67,7 @@
 }
 
 .rotor-top span {
-  font-size: clamp(50px, 16vw, 500px);
+  font-size: clamp(56px, min(18vw, 40vh), 480px);
   font-weight: 700;
   color: #c8c8c8;
   line-height: 1;
@@ -84,7 +85,7 @@
   height: 50%;
   overflow: hidden;
   background: #252525;
-  border-radius: 0 0 clamp(4px, 0.8vw, 12px) clamp(4px, 0.8vw, 12px);
+  border-radius: 0 0 clamp(4px, 0.6vw, 10px) clamp(4px, 0.6vw, 10px);
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -92,7 +93,7 @@
 }
 
 .rotor-bottom span {
-  font-size: clamp(50px, 16vw, 500px);
+  font-size: clamp(56px, min(18vw, 40vh), 480px);
   font-weight: 700;
   color: #bbb;
   line-height: 1;
@@ -143,7 +144,7 @@
   height: 100%;
   overflow: hidden;
   background: #2a2a2a;
-  border-radius: clamp(4px, 0.8vw, 12px) clamp(4px, 0.8vw, 12px) 0 0;
+  border-radius: clamp(4px, 0.6vw, 10px) clamp(4px, 0.6vw, 10px) 0 0;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   display: flex;
@@ -152,7 +153,7 @@
 }
 
 .rotor-leaf-front span {
-  font-size: clamp(50px, 16vw, 500px);
+  font-size: clamp(56px, min(18vw, 40vh), 480px);
   font-weight: 700;
   color: #c8c8c8;
   line-height: 1;
@@ -170,7 +171,7 @@
   height: 100%;
   overflow: hidden;
   background: #252525;
-  border-radius: 0 0 clamp(4px, 0.8vw, 12px) clamp(4px, 0.8vw, 12px);
+  border-radius: 0 0 clamp(4px, 0.6vw, 10px) clamp(4px, 0.6vw, 10px);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   transform: rotateX(180deg);
@@ -180,7 +181,7 @@
 }
 
 .rotor-leaf-rear span {
-  font-size: clamp(50px, 16vw, 500px);
+  font-size: clamp(56px, min(18vw, 40vh), 480px);
   font-weight: 700;
   color: #bbb;
   line-height: 1;
@@ -197,35 +198,42 @@
   background: linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.15));
 }
 
-/* ── Responsive: Vertical layout on narrow widths ──────── */
+/* ── Portrait Layout (aspect-ratio based) ──────────────── */
+/* When height > width, switch to vertical stacked layout */
 
-@container (max-width: 880px) {
+@media (max-aspect-ratio: 1/1) {
   .flip-clock {
     flex-direction: column;
+    gap: clamp(4px, 1.5vh, 14px);
   }
-  .flip-clock__colon {
-    flex-direction: row;
-    padding: clamp(2px, 0.5vh, 8px) 0;
-  }
-}
 
-/* Fallback for environments without container queries */
-@media (max-width: 880px) {
-  .flip-clock {
-    flex-direction: column;
+  .flip-clock__group {
+    gap: clamp(3px, 1.5vw, 10px);
   }
+
   .flip-clock__colon {
     flex-direction: row;
-    padding: clamp(2px, 0.5vh, 8px) 0;
+    gap: clamp(4px, 2vw, 12px);
+    padding: clamp(2px, 0.8vh, 8px) 0;
   }
+
+  .flip-clock__colon-dot {
+    width: clamp(4px, 1.2vw, 10px);
+    height: clamp(4px, 1.2vw, 10px);
+  }
+
+  /* Portrait: vw for width (horizontal constraint), vh for height (vertical fit) */
+  /* 2 digits at ~43vw each + gap = ~90% width */
+  /* 2 rows at ~36vh each + gaps = ~80% height (leaving room for dots/label) */
   .rotor {
-    width: clamp(150px, 28vw, 220px);
-    height: clamp(66px, 37vh, 360px);
+    width: clamp(60px, 43vw, 400px);
+    height: clamp(84px, 36vh, 500px);
   }
+
   .rotor-top span,
   .rotor-bottom span,
   .rotor-leaf-front span,
   .rotor-leaf-rear span {
-    font-size: clamp(180px, 25vw, 530px);
+    font-size: clamp(54px, min(38vw, 32vh), 420px);
   }
 }

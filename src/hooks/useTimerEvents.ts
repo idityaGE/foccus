@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { listen } from "@tauri-apps/api/event";
+import { getCurrentWindow } from "@tauri-apps/api/window";
 import { useTimerStore } from "@/stores/timerStore";
 import { useSettingsStore } from "@/stores/settingsStore";
 import {
@@ -31,8 +32,28 @@ export function useTimerEvents() {
   const status = useTimerStore((s) => s.status);
 
   useEffect(() => {
-    // Load initial data from Rust
-    loadSettings().then((s) => useSettingsStore.getState().setSettings(s));
+    const win = getCurrentWindow();
+
+    // Load initial data from Rust and apply window settings
+    loadSettings().then(async (s) => {
+      useSettingsStore.getState().setSettings(s);
+
+      // Apply window settings on startup
+      if (s.always_on_top) {
+        try {
+          await win.setAlwaysOnTop(true);
+        } catch {
+          // Window manager may not support this feature
+        }
+      }
+      if (s.visible_on_all_workspaces) {
+        try {
+          await win.setVisibleOnAllWorkspaces(true);
+        } catch {
+          // Window manager may not support this feature
+        }
+      }
+    });
     loadSessions().then((s) => setSessions(s));
     getActiveSessionIndex().then((i) => setActiveSessionIndex(i));
 

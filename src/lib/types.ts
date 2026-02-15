@@ -41,6 +41,7 @@ export interface Settings {
   auto_start_next: boolean;
   always_on_top: boolean;
   show_clock: boolean;
+  visible_on_all_workspaces: boolean;
 }
 
 export interface Session {

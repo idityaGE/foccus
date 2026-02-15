@@ -12,6 +12,7 @@ import Settings from "@/components/Settings/Settings";
 import SessionEditor from "@/components/SessionEditor/SessionEditor";
 import MiniMode from "@/components/MiniMode/MiniMode";
 import TitleBar from "@/components/TitleBar/TitleBar";
+import SegmentDots from "@/components/SegmentDots/SegmentDots";
 
 const MINI_WIDTH = 260;
 const MINI_HEIGHT = 48;
@@ -95,6 +96,9 @@ function App() {
     >
       {/* Title Bar (auto-hide, drag region) */}
       <TitleBar />
+
+      {/* Segment progress dots */}
+      <SegmentDots />
 
       {/* Real-time clock */}
       {showClock && (

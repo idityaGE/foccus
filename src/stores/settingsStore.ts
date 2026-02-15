@@ -19,6 +19,7 @@ const defaultSettings: Settings = {
   auto_start_next: false,
   always_on_top: false,
   show_clock: false,
+  visible_on_all_workspaces: false,
 };
 
 export const useSettingsStore = create<SettingsStore>((set) => ({

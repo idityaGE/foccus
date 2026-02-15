@@ -1,10 +1,5 @@
 import { useTimerStore } from "@/stores/timerStore";
-
-function formatTime(secs: number): string {
-  const m = Math.floor(secs / 60);
-  const s = secs % 60;
-  return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
-}
+import { formatTime } from "@/lib/utils";
 
 export default function MiniMode() {
   const remainingSecs = useTimerStore((s) => s.remainingSecs);

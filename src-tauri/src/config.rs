@@ -13,6 +13,8 @@ pub struct Settings {
     pub auto_start_next: bool,
     pub always_on_top: bool,
     pub show_clock: bool,
+    #[serde(default)]
+    pub visible_on_all_workspaces: bool,
 }
 
 impl Default for Settings {
@@ -25,6 +27,7 @@ impl Default for Settings {
             auto_start_next: false,
             always_on_top: false,
             show_clock: false,
+            visible_on_all_workspaces: false,
         }
     }
 }

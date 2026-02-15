@@ -10,14 +10,14 @@ name = "foccus_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
-tauri-build = { version = "2", features = [] }
+tauri-build = { version = "2.5.5", features = [] }
 
 [dependencies]
-tauri = { version = "2", features = ["tray-icon"] }
-tauri-plugin-opener = "2"
-tauri-plugin-notification = "2"
-tauri-plugin-global-shortcut = "2"
-tauri-plugin-single-instance = "2"
+tauri = { version = "2.10.2", features = ["tray-icon"] }
+tauri-plugin-opener = "2.5.3"
+tauri-plugin-notification = "2.3.3"
+tauri-plugin-global-shortcut = "2.3.1"
+tauri-plugin-single-instance = "2.3.0"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 tokio = { version = "1", features = ["sync", "time", "macros"] }

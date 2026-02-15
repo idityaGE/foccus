@@ -1,19 +1,17 @@
 import { useState, useEffect, useCallback } from "react";
 import { getCurrentWindow } from "@tauri-apps/api/window";
+import { Minus, Square, X } from "lucide-react";
 
 export default function TitleBar() {
   const [visible, setVisible] = useState(false);
   const [hovered, setHovered] = useState(false);
 
   // Show on mouse near top edge
-  const handleMouseMove = useCallback(
-    (e: MouseEvent) => {
-      if (e.clientY <= 6) {
-        setVisible(true);
-      }
-    },
-    []
-  );
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    if (e.clientY <= 6) {
+      setVisible(true);
+    }
+  }, []);
 
   useEffect(() => {
     document.addEventListener("mousemove", handleMouseMove);
@@ -59,9 +57,7 @@ export default function TitleBar() {
             className="w-7 h-7 flex items-center justify-center rounded hover:bg-neutral-700/60 text-neutral-400 hover:text-neutral-200 transition-colors"
             title="Minimize"
           >
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <rect y="5" width="12" height="2" rx="1" fill="currentColor" />
-            </svg>
+            <Minus className="w-3.5 h-3.5" />
           </button>
 
           {/* Maximize */}
@@ -70,18 +66,7 @@ export default function TitleBar() {
             className="w-7 h-7 flex items-center justify-center rounded hover:bg-neutral-700/60 text-neutral-400 hover:text-neutral-200 transition-colors"
             title="Maximize"
           >
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <rect
-                x="1"
-                y="1"
-                width="10"
-                height="10"
-                rx="1.5"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                fill="none"
-              />
-            </svg>
+            <Square className="w-3 h-3" />
           </button>
 
           {/* Close (hides to tray) */}
@@ -90,14 +75,7 @@ export default function TitleBar() {
             className="w-7 h-7 flex items-center justify-center rounded hover:bg-red-500/80 text-neutral-400 hover:text-white transition-colors"
             title="Close to tray"
           >
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path
-                d="M1 1L11 11M11 1L1 11"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-            </svg>
+            <X className="w-3.5 h-3.5" />
           </button>
         </div>
       </div>
