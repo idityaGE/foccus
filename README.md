@@ -2,7 +2,9 @@
 
 A minimal Pomodoro timer for Linux with a retro flip-clock display.
 
-![Foccus Screenshot](https://raw.githubusercontent.com/idityaGE/foccus/main/.github/screenshot.png)
+![Foccus Screenshot](.github/image0.png)
+![Foccus Screenshot](.github/image1.png)
+![Foccus Screenshot](.github/image2.png)
 
 ## Features
 
