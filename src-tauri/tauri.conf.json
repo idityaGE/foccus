@@ -12,6 +12,19 @@
   "app": {
     "windows": [
       {
+        "label": "splashscreen",
+        "title": "Foccus",
+        "width": 400,
+        "height": 300,
+        "decorations": false,
+        "transparent": true,
+        "center": true,
+        "resizable": false,
+        "skipTaskbar": true,
+        "alwaysOnTop": true,
+        "url": "splashscreen.html"
+      },
+      {
         "label": "main",
         "title": "Foccus",
         "width": 800,
@@ -20,7 +33,8 @@
         "minHeight": 300,
         "decorations": false,
         "resizable": true,
-        "fullscreen": false
+        "fullscreen": false,
+        "visible": false
       }
     ],
     "security": {
@@ -37,6 +51,6 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ],
-    "resources": ["sounds/*"]
+    "resources": ["sounds/*", "splashscreen.html", "icons/*"]
   }
 }

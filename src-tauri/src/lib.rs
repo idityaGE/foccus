@@ -193,6 +193,11 @@ pub fn run() {
         .plugin(tauri_plugin_notification::init())
         .plugin(tauri_plugin_global_shortcut::Builder::new().build())
         .plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
+            // Close splashscreen if still open
+            if let Some(splashscreen) = app.get_webview_window("splashscreen") {
+                let _ = splashscreen.close();
+            }
+            
             if let Some(window) = app.get_webview_window("main") {
                 let _ = window.show();
                 let _ = window.set_focus();
@@ -212,6 +217,25 @@ pub fn run() {
             });
 
             setup_tray(app)?;
+
+            // Handle splashscreen
+            let splashscreen_window = app.get_webview_window("splashscreen");
+            let main_window = app.get_webview_window("main");
+
+            if let (Some(splashscreen), Some(main)) = (splashscreen_window, main_window.clone()) {
+                // Show main window after a delay and close splashscreen
+                tauri::async_runtime::spawn(async move {
+                    // Wait for main window to be ready (simulate loading time)
+                    std::thread::sleep(std::time::Duration::from_millis(1500));
+                    
+                    // Show main window
+                    let _ = main.show();
+                    let _ = main.set_focus();
+                    
+                    // Close splashscreen
+                    let _ = splashscreen.close();
+                });
+            }
 
             // Handle window close -> hide to tray instead of quit
             let window = app.get_webview_window("main").unwrap();
