@@ -43,7 +43,13 @@
   },
   "bundle": {
     "active": true,
-    "targets": ["rpm"],
+    "targets": [
+      "deb",
+      "rpm",
+      "appimage"
+    ],
+    "publisher": "idityage",
+    "homepage": "https://github.com/idityage/foccus",
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",
@@ -51,6 +57,21 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ],
-    "resources": ["sounds/*", "splashscreen.html", "icons/*"]
+    "resources": [
+      "sounds/*",
+      "splashscreen.html",
+      "icons/*"
+    ],
+    "linux": {
+      "deb": {
+        "depends": []
+      },
+      "appimage": {
+        "bundleMediaFramework": true
+      }
+    },
+    "category": "Utility",
+    "shortDescription": "A minimal Pomodoro timer",
+    "longDescription": "Foccus is a minimalist Pomodoro timer application designed to help you stay focused and productive. Features customizable work/break intervals, sound notifications, and a clean interface."
   }
 }
